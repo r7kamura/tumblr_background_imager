@@ -1,5 +1,5 @@
 var TumblrImager = {
-  // will be set in this.getImageUrls
+  // will be set in this.updateUrls
   urls: [],
 
   // interval sec between changing images
