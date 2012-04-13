@@ -1,51 +1,51 @@
 var TumblrImager = {
   // will be set in this.getImageUrls
-  imageUrls: [],
+  urls: [],
 
   // interval sec between changing images
-  imageInterval: 3 * 1000,
+  interval: 3.5 * 1000,
 
   init: function(args) {
     this.json              = args.json;
     this.containerSelector = args.containerSelector;
 
-    this.updateImageUrls();
-    this.shuffleImageUrls();
-    this.startImagesSlot();
+    this.updateUrls();
+    this.shuffleUrls();
+    this.startRotation();
   },
 
-  updateImageUrls: function() {
+  updateUrls: function() {
     var self = this;
     $.each(self.json.posts, function() {
-      self.imageUrls.push(this['photo-url-1280']);
+      self.urls.push(this['photo-url-1280']);
     });
   },
 
-  startImagesSlot: function() {
+  startRotation: function() {
     var self = this;
 
-    self.rotateImageUrl(function(url) { self.showImage(url) });
+    self.rotateUrl(function(url) { self.changeImage(url) });
 
     setInterval(function() {
-      self.rotateImageUrl(function(url) { self.showImage(url) });
-    }, self.imageInterval);
+      self.rotateUrl(function(url) { self.changeImage(url) });
+    }, self.interval);
   },
 
-  showImage: function(url) {
-    var img = $('<img />').attr('src', url);
-    $(this.containerSelector).css({
-      backgroundImage: 'url(' + url + ')'
+  changeImage: function() {
+    var self = this;
+    this.rotateUrl(function(url) {
+      $(self.containerSelector).css('backgroundImage', 'url(' + url + ')');
     });
   },
 
-  rotateImageUrl: function(callback) {
-    var url = this.imageUrls.shift();
+  rotateUrl: function(callback) {
+    var url = this.urls.shift();
     callback(url);
-    this.imageUrls.push(url);
+    this.urls.push(url);
   },
 
-  shuffleImageUrls: function() {
-    this.imageUrls = this.shuffle(this.imageUrls);
+  shuffleUrls: function() {
+    this.urls = this.shuffle(this.urls);
   },
 
   shuffle: function (array) {
