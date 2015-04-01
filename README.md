@@ -2,7 +2,7 @@
 Change background-image periodically using Tumblr's API
 
 ## Example
-[Demo](http://bit.ly/tumblr_background_imager)
+[Demo](http://r7kamura.github.io/tumblr_background_imager/)
 
 ```html
 <!DOCTYPE HTML>
